@@ -1,0 +1,152 @@
+{
+  "Aesop": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Aqua Vitalis": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Artemisia": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Bane Poison": {
+    "Weak": 30,
+    "Standard": 40,
+    "Strong": 50,
+    "Henry's": 70
+  },
+  "Bowman's Brew": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Buck's Blood Potion": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Chamomile Decoction": {
+    "Weak": 20,
+    "Standard": 25,
+    "Strong": 35,
+    "Henry's": 50
+  },
+  "Cockerel": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Digestive Potion": {
+    "Weak": 20,
+    "Standard": 25,
+    "Strong": 35,
+    "Henry's": 50
+  },
+  "Dollmaker Potion": {
+    "Weak": 25,
+    "Standard": 60,
+    "Strong": 45,
+    "Henry's": 60
+  },
+  "Embrocation": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Fever Tonic": {
+    "Standard": 40
+  },
+  "Fox": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Hair o' the Dog": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Lead Shot Gunpowder": {
+    "Weak": 0,
+    "Standard": 0,
+    "Strong": 0,
+    "Henry's": 0
+  },
+  "Lethean Water": {
+    "Standard": 100
+  },
+  "Lion Perfume": {
+    "Weak": 50,
+    "Standard": 60,
+    "Strong": 70,
+    "Henry's": 90
+  },
+  "Lullaby": {
+    "Weak": 25,
+    "Standard": 35,
+    "Strong": 45,
+    "Henry's": 60
+  },
+  "Marigold Decoction": {
+    "Weak": 30,
+    "Standard": 40,
+    "Strong": 50,
+    "Henry's": 60
+  },
+  "Mintha Perfume": {
+    "Weak": 30,
+    "Standard": 35,
+    "Strong": 45,
+    "Henry's": 60
+  },
+  "Moonshine": {
+    "Standard": 0
+  },
+  "Nighthawk": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Painkiller Brew": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Quickfinger": {
+    "Weak": 35,
+    "Standard": 45,
+    "Strong": 55,
+    "Henry's": 70
+  },
+  "Saviour Schnapps": {
+    "Weak": 25,
+    "Standard": 30,
+    "Strong": 40,
+    "Henry's": 55
+  },
+  "Scattershot Powder": {
+    "Weak": 0,
+    "Standard": 0,
+    "Strong": 0,
+    "Henry's": 0
+  },
+  "Soap": {
+    "Standard": 14.6
+  }
+}
