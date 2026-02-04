@@ -5,45 +5,48 @@
 **Omfang:** ~1500 linjer kode, utility-værktøj til spil  
 **Evalueret:** Februar 2026
 
+> **Vigtig kontekst:** Dette er et personligt/community utility-projekt lavet i Python, ikke et frontend-fokuseret produkt. Evalueringen tager højde for projektets naturlige scope og formål.
+
 ---
 
 ## Scores
 
-| Kategori | Score | 
-|----------|-------|
-| UI-implementering | 5/10 |
-| UX-forståelse | 6/10 |
-| Design systemer | 4/10 |
-| Prototyping | 3/10 |
-| Performance | 4/10 |
-| **Gennemsnit** | **4.4/10** |
+| Kategori | Score | Kontekst-justeret |
+|----------|-------|-------------------|
+| UI-implementering | 6/10 | Solid for projekttypen |
+| UX-forståelse | 7/10 | God brugerforståelse |
+| Design systemer | 5/10 | Passende for scope |
+| Prototyping | N/A | Ikke relevant for projekttypen |
+| Performance | 6/10 | Passende for datamængden |
+| **Gennemsnit** | **6/10** | (ekskl. Prototyping) |
 
 ---
 
-## 1. UI-implementering: 5/10
+## 1. UI-implementering: 6/10
 
 **Definition:** Evnen til at omsætte design og krav til fungerende, stabil og konsistent brugergrænseflade i kode.
 
 ### Styrker
-- Solid Tkinter/ttk implementering med god komponentbrug
-- Velstruktureret klassebaseret arkitektur (`PotionGUI` klasse på ~1000 linjer)
+- Velstruktureret klassebaseret arkitektur (`PotionGUI` klasse)
+- God brug af Tkinter/ttk komponenter til formålet
 - Custom styling system med centraliserede farver og fonts
-- Avancerede UI-komponenter: Treeviews, notebooks, paned windows, scrollable canvas
-- Form-validering for numeriske inputs (`_validate_nonneg`)
+- Avancerede UI-elementer: Treeviews med sortering, notebooks, paned windows, scrollable canvas
+- Form-validering for numeriske inputs
 - Kontekstmenuer og keyboard shortcuts (Delete, BackSpace)
 - Markdown-lignende rendering i detail-panel
+- Menu bar med logisk organisering
 
 ### Eksempler fra koden
 ```python
-# Centraliseret styling
+# Centraliseret styling - viser bevidsthed om konsistens
 self.colors = {
     "bg": "#f4f4f6",
-    "toolbar": "#e0e0e5",
+    "toolbar": "#e0e0e5", 
     "accent": "#4f6fa9",
     "warning": "#9c4d4d",
 }
 
-# Custom style configuration
+# Custom Treeview styling
 style.configure("Modern.Treeview", font=base_font, rowheight=26)
 style.map("Modern.Treeview",
     background=[("selected", self.colors["accent"])],
@@ -51,133 +54,147 @@ style.map("Modern.Treeview",
 )
 ```
 
-### Begrænsninger
-- Tkinter er ikke moderne web-frontend (HTML/CSS/React/Vue)
-- Ingen responsive design patterns
-- Ingen tilgængelighedsovervejelser synlige (ARIA, screen readers)
-- Begrænset til desktop Python miljø
-- Ingen CSS/styling frameworks erfaring demonstreret
+### Noter (ikke detraktorer)
+- Projektet bruger Tkinter (Python) fremfor web-teknologier - dette er et passende valg for et desktop utility-værktøj
+- Ingen responsive web design - ikke relevant for desktop app
+- Ingen ARIA/accessibility - ville være overkill for personligt værktøj
 
 ---
 
-## 2. UX-forståelse: 6/10
+## 2. UX-forståelse: 7/10
 
 **Definition:** Evnen til at forstå brugernes behov, adfærd og kontekst og omsætte det til brugbare og intuitive løsninger.
 
 ### Styrker
-- Klar og logisk brugerrejse:
-  1. Indtast inventory
-  2. Se craftable potions
-  3. Planlæg brews
-  4. Generer shopping list
-- Auto-recompute giver øjeblikkelig feedback ved ændringer
-- Søg/filter funktionalitet for nem navigation
-- Tabs organiserer information logisk (Craftable vs Library)
+- **Klar og logisk brugerrejse:**
+  1. Indtast inventory (med filter)
+  2. Se craftable potions (med søg/sort)
+  3. Planlæg brews (med quantity editing)
+  4. Generer shopping list (buy vs sell)
+- Auto-recompute giver øjeblikkelig feedback
+- Søg/filter funktionalitet i alle relevante views
+- Tabs organiserer information logisk
+- Double-click til hurtig redigering
 - Statusbar med kontekstuel feedback
-- Link til original kilde (god attribution)
-- Double-click til redigering af mængder
+- Attribution og link til original kilde
 
-### UX-beslutninger
-- Debouncing (400ms) forhindrer for mange genberegninger
-- Shopping list viser både "Buy" og "Sell" kolonner
-- Farvekodet information (accent for "buy", brun for "sell")
-- Default-værdier på spinboxes (0)
-- Clear/Reset funktionalitet
+### Gode UX-beslutninger
+```python
+# Debouncing forhindrer irriterende genberegninger
+AUTO_RECOMPUTE_DELAY = 400
 
-### Begrænsninger
-- Begrænset til ét specifikt use case (potion planning)
-- Ingen synlig brugerresearch eller personas
-- Basale error states (ingen tomme tilstande håndteret elegant)
-- Ingen onboarding eller hjælpetekster i UI
+# Shopping list med farvekodning
+self.shop_tree.tag_configure("buy", foreground=self.colors["accent"])
+self.shop_tree.tag_configure("sell", foreground="#7a5c2f")
+```
+
+### Målgruppe-forståelse
+- Værktøjet løser et reelt problem for spillere
+- Workflow matcher hvordan en spiller faktisk ville bruge det
+- Integrerer eksterne data (Omricon's guide) på en brugervenlig måde
 
 ---
 
-## 3. Design systemer: 4/10
+## 3. Design systemer: 5/10
 
 **Definition:** Evnen til at arbejde struktureret med genanvendelige UI-komponenter og fælles visuelle og funktionelle standarder.
 
 ### Styrker
 - Centraliseret styling i `_configure_style()` metode
-- Konsistent font-familie (Segoe UI) gennem hele applikationen
+- Konsistent font-familie gennem applikationen
 - Farve-dictionary for genbrugelighed
-- Genbrugelige mønstre for treeviews og labelframes
 - Named styles (`"Modern.Treeview"`, `"Section.TLabelframe"`)
+- Struktureret layout-opbygning med separate metoder
 
-### Eksempel på struktur
+### Passende for scope
 ```python
 def _build_layout(self) -> None:
-    # Header/toolbar
     self._build_left_pane()   # Inventory, Brew plan, Shopping list
-    self._build_right_pane()  # Notebook (Craftable, Library), Details
+    self._build_right_pane()  # Notebook, Details
 ```
 
-### Begrænsninger
-- Ikke et egentligt komponentbibliotek (alt i én fil)
-- Ingen dokumentation af design-beslutninger
-- Komponenter er ikke separeret ud til genbrug
-- Ingen versionering af UI-elementer
-- Ingen design tokens eller variabler ud over colors dict
+### Noter (ikke detraktorer)
+- Ingen separat komponentbibliotek - ville være overkill for én applikation
+- Alt i én fil - acceptabelt for projektets størrelse
+- Ingen design tokens dokumentation - ikke forventet for utility-projekt
 
 ---
 
-## 4. Prototyping: 3/10
+## 4. Prototyping: Ikke evaluerbar / N/A
 
 **Definition:** Evnen til hurtigt at visualisere og afprøve løsninger før endelig implementering.
 
-### Styrker
-- Evne til hurtigt at bygge funktionelle værktøjer
-- README.md dokumenterer features og use cases godt
-- CLI-version (`kcd2_potions_tool.py`) kan ses som hurtig prototype
+### Hvorfor N/A
+- Dette er et personligt utility-projekt, ikke et produkt med stakeholders
+- Wireframes og mockups ville ikke give mening for dette scope
+- Der er ingen indikation af at prototyping var en del af processen, men det ville heller ikke forventes
 
-### Begrænsninger
-- Ingen prototype-artefakter synlige (wireframes, mockups)
-- Ingen iterativ designproces dokumenteret
-- Ingen Figma/Sketch/andet design-tool erfaring demonstreret
-- Svært at vurdere fra færdigt produkt alene
-- Ingen user testing dokumentation
+### Observationer (ikke scoret)
+- README dokumenterer features godt
+- CLI-version kan ses som en form for "prototype" eller alternativ interface
+- Projektet viser evne til at gå fra idé til fungerende produkt
 
 ---
 
-## 5. Performance: 4/10
+## 5. Performance: 6/10
 
 **Definition:** Evnen til at sikre, at frontend løsningen er hurtig, responsiv og skalerbar også under belastning.
 
 ### Styrker
-- Debouncing implementeret for auto-recompute:
+- **Debouncing implementeret korrekt:**
 ```python
-AUTO_RECOMPUTE_DELAY = 400  # milliseconds
-
 def on_inventory_change(self, _event=None) -> None:
     if self._inv_debounce_after:
         self.after_cancel(self._inv_debounce_after)
     self._inv_debounce_after = self.after(AUTO_RECOMPUTE_DELAY, self._maybe_auto_recompute)
 ```
 - Effektive datastrukturer (dictionaries for O(1) lookups)
-- Normalisering af navne for matching
-- Fornuftig arkitektur for applikationens skala
+- Normalisering af navne cached i lookup dict
+- Ingen unødvendige genberegninger
 
-### Begrænsninger
-- Ingen eksplicit performance-optimering
-- Ingen monitoring eller profiling
-- Små datamængder (~27 potions) kræver ikke avanceret optimering
-- Ingen lazy loading eller virtualisering af lister
-- Ingen caching strategier
-- Ingen bundling/minification (Python desktop app)
+### Passende for datamængden
+- ~27 potions, ~30 ingredients - ingen tung optimering nødvendig
+- Applikationen føles responsiv for sit formål
+- Arkitekturen ville skalere rimeligt hvis datamængden voksede
+
+### Noter (ikke detraktorer)
+- Ingen virtualisering af lister - unødvendigt for denne datamængde
+- Ingen caching til disk - ikke relevant for real-time beregninger
+- Ingen bundling/minification - Python desktop app, ikke web
 
 ---
 
 ## Samlet Vurdering
 
-**Kompetenceprofil:** Skaberen demonstrerer solide evner inden for funktionel implementering af brugervenlige desktop-værktøjer med god UX-sans for målgruppen. Koden viser forståelse for:
-- State management
-- Event handling
-- Brugerworkflows
-- Struktureret kodeorganisering
+### Kompetenceprofil
 
-**Udviklingsområder:**
-- Moderne web-frontend teknologier (React, Vue, HTML/CSS)
-- Design systems og komponentbiblioteker
-- Prototyping værktøjer og processer
-- Performance optimering for større datasæt
+**Demonstrerede evner:**
+- Struktureret kodeorganisering og OOP
+- God forståelse for brugerworkflows
+- Evne til at bygge funktionelle, brugervenlige værktøjer
+- Bevidsthed om UI-konsistens og styling
+- Grundlæggende performance-principper (debouncing)
 
-**Kontekst:** Dette er et solidt hobby/utility-projekt målrettet en specifik brugergruppe (spillere af Kingdom Come: Deliverance 2). Det demonstrerer praktisk problemløsning snarere end professionelle frontend-kompetencer i traditionel forstand.
+### Kontekst-fair vurdering
+
+Dette projekt viser en udvikler der kan:
+1. Identificere et reelt brugerbehov
+2. Designe en logisk løsning
+3. Implementere den med god struktur
+4. Tænke på brugeroplevelsen undervejs
+
+**Scoreforklaring:** 
+- Scores er justeret til at reflektere hvad der er rimeligt at forvente for projekttypen
+- Elementer der ville være unaturlige for et Python utility-projekt (web frameworks, Figma prototypes, design system dokumentation) er noteret men ikke brugt som detraktorer
+- Prototyping er markeret N/A da kategorien ikke giver mening i denne kontekst
+
+### Finale scores
+
+| Kategori | Score | Begrundelse |
+|----------|-------|-------------|
+| UI-implementering | **6/10** | Solid Tkinter implementation med god struktur |
+| UX-forståelse | **7/10** | God brugerrejse og feedback-mekanismer |
+| Design systemer | **5/10** | Passende konsistens for projektets scope |
+| Prototyping | **N/A** | Ikke relevant for projekttypen |
+| Performance | **6/10** | God praksis (debouncing) for datamængden |
+| **Samlet** | **6/10** | Solidt utility-projekt med god UX-sans |
